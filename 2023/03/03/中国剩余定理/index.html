@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.8.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="孙子问题 最早，在《孙子算经》中有这样一个问题：“今有物不知其数，三三数之剩二，五五数之剩三，七七数之剩二，问物几何？ 表达的意思为： \(x\ mod\ 3 &#x3D; 2\) \(x\ mod\ 5 &#x3D; 3\) \(x\ mod\ 7 &#x3D; 2\) 未知数\(x\)需要满足以上三个条件，求出\(x\)。 问题分解 step 1 将问题分解为求一下三个未知数：  \(x_1\)除以3余2、除以">
+<meta property="og:type" content="article">
+<meta property="og:title" content="中国剩余定理">
+<meta property="og:url" content="http://example.com/2023/03/03/%E4%B8%AD%E5%9B%BD%E5%89%A9%E4%BD%99%E5%AE%9A%E7%90%86/index.html">
+<meta property="og:site_name" content="blog">
+<meta property="og:description" content="孙子问题 最早，在《孙子算经》中有这样一个问题：“今有物不知其数，三三数之剩二，五五数之剩三，七七数之剩二，问物几何？ 表达的意思为： \(x\ mod\ 3 &#x3D; 2\) \(x\ mod\ 5 &#x3D; 3\) \(x\ mod\ 7 &#x3D; 2\) 未知数\(x\)需要满足以上三个条件，求出\(x\)。 问题分解 step 1 将问题分解为求一下三个未知数：  \(x_1\)除以3余2、除以">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-03-03T14:40:24.000Z">
+<meta property="article:modified_time" content="2023-03-03T14:46:04.729Z">
+<meta property="article:author" content="一个人">
+<meta property="article:tag" content="密码学">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2023/03/03/%E4%B8%AD%E5%9B%BD%E5%89%A9%E4%BD%99%E5%AE%9A%E7%90%86/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2023/03/03/%E4%B8%AD%E5%9B%BD%E5%89%A9%E4%BD%99%E5%AE%9A%E7%90%86/","path":"2023/03/03/中国剩余定理/","title":"中国剩余定理"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>中国剩余定理 | blog</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%99%E5%AD%90%E9%97%AE%E9%A2%98"><span class="nav-number">1.</span> <span class="nav-text">孙子问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E5%88%86%E8%A7%A3"><span class="nav-number">2.</span> <span class="nav-text">问题分解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#step-1"><span class="nav-number">2.1.</span> <span class="nav-text">step 1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#step-2"><span class="nav-number">2.2.</span> <span class="nav-text">step 2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#step-3"><span class="nav-number">2.3.</span> <span class="nav-text">step 3</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%AD%E5%9B%BD%E5%89%A9%E4%BD%99%E5%AE%9A%E7%90%86%E5%BA%94%E7%94%A8"><span class="nav-number">3.</span> <span class="nav-text">中国剩余定理应用</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">一个人</p>
+  <div class="site-description" itemprop="description">security</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/03/03/%E4%B8%AD%E5%9B%BD%E5%89%A9%E4%BD%99%E5%AE%9A%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="一个人">
+      <meta itemprop="description" content="security">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          中国剩余定理
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2023-03-03 22:40:24 / 修改时间：22:46:04" itemprop="dateCreated datePublished" datetime="2023-03-03T22:40:24+08:00">2023-03-03</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="孙子问题">孙子问题</h2>
+<p>最早，在《孙子算经》中有这样一个问题：“今有物不知其数，三三数之剩二，五五数之剩三，七七数之剩二，问物几何？ 表达的意思为： <span class="math inline">\(x\ mod\ 3 = 2\)</span> <span class="math inline">\(x\ mod\ 5 = 3\)</span> <span class="math inline">\(x\ mod\ 7 = 2\)</span> 未知数<span class="math inline">\(x\)</span>需要满足以上三个条件，求出<span class="math inline">\(x\)</span>。</p>
+<h2 id="问题分解">问题分解</h2>
+<h3 id="step-1">step 1</h3>
+<p>将问题分解为求一下三个未知数：</p>
+<ol type="1">
+<li><span class="math inline">\(x_1\)</span>除以3余2、除以5余0、除以7余0</li>
+<li><span class="math inline">\(x_2\)</span>除以3余0、除以5与3、除以7余0</li>
+<li><span class="math inline">\(x_3\)</span>除以3余0、除以5余0、除以7余2</li>
+</ol>
+<p>当<span class="math inline">\(x=x_1+x_2+x_3\)</span>时，<span class="math inline">\(x\)</span>就满足了上述条件。</p>
+<blockquote>
+<p><span class="math inline">\(x\)</span>可以保证满足其中之一时，另外两个余数为0。例如，满足除以3余2时，<span class="math inline">\(x_2\)</span>和<span class="math inline">\(x_3\)</span>余数为零，所以<span class="math inline">\(x\)</span>的余数即为2。</p>
+</blockquote>
+<h3 id="step-2">step 2</h3>
+<p>将求<span class="math inline">\(x_1,x_2,x_3\)</span>的问题继续分解： 如果一个整数<span class="math inline">\(y_1\)</span>除以3余1、除以5余0、除以7余0，则令<span class="math inline">\(x_1\)</span> = <span class="math inline">\(2\times y_1\)</span>，这时就可以满足上述问题1。以此类推，上述问题化为： 1.1. 寻找<span class="math inline">\(y_1\)</span>满足除以3余1、除以5余0、除以7余0 2.1. 寻找<span class="math inline">\(y_2\)</span>满足除以3余0、除以5余1、除以7余0 3.1. 寻找<span class="math inline">\(y_3\)</span>满足除以3余0、除以5余0、除以7余1 如果找到<span class="math inline">\(y_1,y_2,y_3\)</span>，则<span class="math inline">\(x = 2y_1+3y_2+2y_3\)</span></p>
+<h3 id="step-3">step 3</h3>
+<p>求<span class="math inline">\(y_1\)</span>的问题转化为：寻找一个整数使得<span class="math inline">\(z_1\)</span>除以3余1、除以5余0、除以7余0。 那么，这个数一定是5和7的最小公倍数的<span class="math inline">\(k\)</span>倍（因为除以5和7要整除），即<span class="math inline">\(z_1 = 35k\)</span>。 所以就有<span class="math inline">\(35k\equiv 1(mod\ 3)\)</span>。即35k模3和1模3同余1。 等价于35和k在模3乘法上得到了单位元1(mod3)。 则<span class="math inline">\(k\)</span>为35在模3乘法上的逆元，<span class="math inline">\(k=35^{-1}mod\ 3\)</span>，记作<span class="math inline">\([35^{-1}]_3\)</span>。则： <span class="math inline">\(y_1 = z_1 = 5\times 7 \times [(5\times 7)^{-1}]_3\)</span> 同理： <span class="math inline">\(y_2 = z_2 = 3\times 7 \times [(3\times 7 )^{-1}]_5\\y_3 = z_3 = 3\times 5 \times [(3\times 5 )^{-1}]_7\)</span> 逆推出<span class="math inline">\(x\)</span>表达式为： <span class="math inline">\(x = 2\times z_1+3\times z_2 + 2\times z_3\\=2\times(5\times 7 \times [(5\times 7)^{-1}]_3)\\+3\times(3\times 7 \times [(3\times 7 )^{-1}]_5)\\+2\times (3\times 5 \times [(3\times 5 )^{-1}]_7)\)</span> 如果<span class="math inline">\(x\)</span>满足上述条件，那么<span class="math inline">\(x+3\times5\times7\)</span>也一定满足，因为后面一定可以整除，不影响x的余数。 所以，满足要求的最小非负整数，就用所得数除以105得到余数即为<span class="math inline">\(x\)</span>。 存在两个数<span class="math inline">\(X,Y\)</span>都满足上述条件时，他们之间的差一定是105的倍数，通过上述问题分解和组合解答的方式得到的<span class="math inline">\(x\)</span>在模<span class="math inline">\((3\times5\times7)\)</span>的情况下就是唯一解。 形式化表示： 假设整数<span class="math inline">\(m_1,m_2,...,m_n（3,5,7）\)</span>两两互素。对于任意的整数<span class="math inline">\(a_1,a_2,...,a_n，()\)</span>方程组： <span class="math inline">\(x\equiv a_1(mod\ m_1)\)</span> <span class="math inline">\(x\equiv a_2(mod\ m_2)\)</span> <span class="math inline">\(...\)</span> <span class="math inline">\(x\equiv a_n(mod\ m_n)\)</span> <span class="math inline">\(N = \sum_{i=1}^n m_i\)</span>,<span class="math inline">\(\frac{N}{m_i}\)</span>为同余数 <span class="math inline">\(x=\sum_{i=1}^n (a_i) \frac{N}{m_i} \times[(\frac{N}{m_i})^{-1}]_{m_i} mod\ N\)</span> 在模<span class="math inline">\(N\)</span>的情况下，得出的即为唯一的<span class="math inline">\(x\)</span>。</p>
+<h2 id="中国剩余定理应用">中国剩余定理应用</h2>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%AF%86%E7%A0%81%E5%AD%A6/" rel="tag"># 密码学</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/05/10/test-article/" rel="prev" title="test-article">
+                  <i class="fa fa-chevron-left"></i> test-article
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">一个人</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>
