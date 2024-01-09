@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
-<meta name="theme-color" content="#222">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)">
 <meta name="generator" content="Hexo 5.4.0">
 
 
@@ -19,7 +20,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.8.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.8.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 <meta name="description" content="security">
 <meta property="og:type" content="website">
 <meta property="og:title" content="blog">
@@ -192,7 +193,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-04-14 09:01:29" itemprop="dateModified" datetime="2023-04-14T09:01:29+08:00">2023-04-14</time>
+      <time title="修改时间：2024-01-09 16:13:24" itemprop="dateModified" datetime="2024-01-09T16:13:24+08:00">2024-01-09</time>
     </span>
 
   
@@ -205,35 +206,15 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="secrets-生成管理面的安全随机数"><a href="#secrets-生成管理面的安全随机数" class="headerlink" title="secrets 生成管理面的安全随机数"></a>secrets 生成管理面的安全随机数</h1><p><code>secrets</code> 模块用于生成高度加密的随机数，适于管理密码、账户验证、安全凭据及机密数据。</p>
-<blockquote>
-<p>最好用<code>secrets</code>替代<code>random</code> 模块的默认伪随机数生成器，该生成器适用于建模和模拟，不宜用于安全与加密。</p>
-</blockquote>
-<h2 id="随机数生成方法"><a href="#随机数生成方法" class="headerlink" title="随机数生成方法"></a>随机数生成方法</h2><p><code>secrets</code>模块是操作系统提供的最安全地随机性来源。</p>
-<ul>
-<li><code>secrets.choice(sequence)</code></li>
-</ul>
-<p>从非空序列（<code>list</code>，<code>ndarray</code>）中随机<strong>选取元素。</strong></p>
-<ul>
-<li><code>secrets.randbelow(n)</code></li>
-</ul>
-<p>返回[0,n)范围内的<strong>随机整数</strong></p>
-<ul>
-<li><code>secrets.randbits(k)</code></li>
-</ul>
-<p>返回k个随机比特位的<strong>整数</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">bit_num = secrets.randbits(<span class="number">32</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">len</span>(bit_num.to_bytes(<span class="number">4</span>, <span class="string">&#x27;big&#x27;</span>)))</span><br><span class="line"><span class="comment"># 4</span></span><br></pre></td></tr></table></figure>
-<h2 id="生成token方法"><a href="#生成token方法" class="headerlink" title="生成token方法"></a>生成token方法</h2><p><code>secrets</code>模块提供了生成安全 Token 的函数，适用于密码重置、密保 URL 等应用场景。</p>
-<p><code>secrets.token_bytes([nbytes=None])</code></p>
-<p>返回<code>nbytes</code>个字节的随机字节字符串，如果没有指定，则使用合理的默认值。</p>
-<p><code>secrets.token_hex([nbytes=None])</code></p>
-<p>返回十六进制随机文本字符串。字符串有<code>nbytes</code> 个随机字节，<strong>每个字节转换为两个十六进制数码</strong>。未提供 <code>nbytes</code> 或为 <code>None</code> 时，则使用合理的默认值。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">token1 = secrets.token_bytes(<span class="number">32</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;token1为：&#123;&#125;，长度为：&#123;&#125;&quot;</span>.<span class="built_in">format</span>(token1, <span class="built_in">len</span>(token1)))</span><br><span class="line">token2 = secrets.token_hex(<span class="number">32</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;token2为：&#123;&#125;，长度为：&#123;&#125;&quot;</span>.<span class="built_in">format</span>(token2, <span class="built_in">len</span>(token2)))</span><br><span class="line"></span><br><span class="line"><span class="string">&quot;&quot;&quot; Output</span></span><br><span class="line"><span class="string">token1为：b&#x27;&amp;\xd0\x1e\xf4\x83\xaa\xd8\x80\xdeb\xabz\r\xa9\xf6\x88\x97\xba\x85\x88\xb75\xa0\x8f\x85\xef2\xff\xc6\x98m\xf2&#x27;，长度为：32</span></span><br><span class="line"><span class="string">token2为：5b5b28a2c184ddb900bf55937241982644f98c43d1ff637928cf5b082c8b73ec，长度为：64</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br></pre></td></tr></table></figure>
-<p><code>secrets.token_urlsafe([nbytes=None])</code></p>
-<p>返回安全的 URL 随机文本字符串，包含<code>nbytes</code>个随机字节。文本用 Base64 编码，平均来说，每个字节对应 1.3 个结果字符。未提供 <code>nbytes</code> 或为 <code>None</code> 时，则使用合理的默认值。</p>
-<p><strong>参考：</strong></p>
-<p><a target="_blank" rel="noopener" href="https://www.bookstack.cn/read/python-3.10.0-zh/532a7cba3beb4015.md">https://www.bookstack.cn/read/python-3.10.0-zh/532a7cba3beb4015.md</a></p>
-
+          <p>python中使用secrets库生成安全的随机数</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/03/18/python-secrets%E5%AE%89%E5%85%A8%E9%9A%8F%E6%9C%BA%E6%95%B0/">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -290,7 +271,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-06-06 15:09:26" itemprop="dateModified" datetime="2023-06-06T15:09:26+08:00">2023-06-06</time>
+      <time title="修改时间：2024-01-09 16:14:44" itemprop="dateModified" datetime="2024-01-09T16:14:44+08:00">2024-01-09</time>
     </span>
 
   
@@ -304,31 +285,14 @@
     
     <div class="post-body" itemprop="articleBody">
           <h2 id="孙子问题"><a href="#孙子问题" class="headerlink" title="孙子问题"></a>孙子问题</h2><p>最早，在《孙子算经》中有这样一个问题：“今有物不知其数，三三数之剩二，五五数之剩三，七七数之剩二，问物几何？<br>表达的意思为：<br>$ x\ mod\ 3 = 2 \\ x\ mod\ 5 = 3\\x\ mod\ 7=2 $<br>未知数$x$需要满足以上三个条件，求出$x$。</p>
-<h2 id="问题分解"><a href="#问题分解" class="headerlink" title="问题分解"></a>问题分解</h2><h3 id="step-1"><a href="#step-1" class="headerlink" title="step 1"></a>step 1</h3><p>将问题分解为求一下三个未知数：</p>
-<ol>
-<li>$x_1$除以3余2、除以5余0、除以7余0</li>
-<li>$x_2$除以3余0、除以5与3、除以7余0</li>
-<li>$x_3$除以3余0、除以5余0、除以7余2</li>
-</ol>
-<p>当$x=x_1+x_2+x_3$时，$x$就满足了上述条件。</p>
-<blockquote>
-<p>$x$可以保证满足其中之一时，另外两个余数为0。例如，满足除以3余2时，$x_2$和$x_3$余数为零，所以$x$的余数即为2。</p>
-</blockquote>
-<h3 id="step-2"><a href="#step-2" class="headerlink" title="step 2"></a>step 2</h3><p>将求$x_1,x_2,x_3$的问题继续分解：<br>如果一个整数$y_1$除以3余1、除以5余0、除以7余0，则令$x_1$ = $2\times y_1$，这时就可以满足上述问题1。以此类推，上述问题化为：<br>1.1. 寻找$y_1$满足除以3余1、除以5余0、除以7余0<br>2.1. 寻找$y_2$满足除以3余0、除以5余1、除以7余0<br>3.1. 寻找$y_3$满足除以3余0、除以5余0、除以7余1<br>如果找到$y_1,y_2,y_3$，则$x = 2y_1+3y_2+2y_3$</p>
-<h3 id="step-3"><a href="#step-3" class="headerlink" title="step 3"></a>step 3</h3><p>求$y_1$的问题转化为：寻找一个整数使得$z_1$除以3余1、除以5余0、除以7余0。<br>那么，这个数一定是5和7的最小公倍数的$k$倍（因为除以5和7要整除），即$z_1 = 35k$。<br>所以就有$35k\equiv 1(mod\ 3)$。即35k模3和1模3同余1。<br>等价于35和k在模3乘法上得到了单位元$1(mod3)$。<br>则$k$为35在模3乘法上的逆元，$k=35^{-1}mod\ 3$，记作$[35^{-1}]_3$。则：</p>
-<p>$y_1 = z_1 = 5\times 7 \times [(5\times 7)^{-1}]_3$</p>
-<p>同理：</p>
-<p>$y_2 = z_2 = 3\times 7 \times [(3\times 7 )^{-1}]_5$<br>$y_3 = z_3 = 3\times 5 \times [(3\times 5 )^{-1}]_7$</p>
-<p>逆推出$x$表达式为：</p>
-<p>$x = 2\times z_1+3\times z_2 + 2\times z_3\\<br>=2\times(5\times 7 \times [(5\times 7)^{-1}]_3)+3\times(3\times 7 \times [(3\times 7 )^{-1}]_5)+2\times (3\times 5 \times [(3\times 5 )^{-1}]_7)$</p>
-<p>如果$x$满足上述条件，那么$x+3\times5\times7$也一定满足，因为后面一定可以整除，不影响x的余数。<br>所以，满足要求的最小非负整数，就用所得数除以105得到余数即为$x$。<br>存在两个数$X,Y$都满足上述条件时，他们之间的差一定是105的倍数，通过上述问题分解和组合解答的方式得到的$x$在模$(3\times5\times7)$的情况下就是唯一解。<br><strong>中国剩余定理形式化表示：</strong><br>假设整数$m_1,m_2,…,m_n（3,5,7）$两两互素。对于任意的整数$a_1,a_2,…,a_n，()$方程组：</p>
-<p>$x\equiv a_1(mod\ m_1)$<br>$x\equiv a_2(mod\ m_2)$<br>$…$<br>$x\equiv a_n(mod\ m_n)$<br>$M = \sum_{i=1}^n m_i$,<br>$x=\sum_{i=1}^n ((a_i) \frac{M}{m_i} \times[(\frac{M}{m_i})^{-1}]_{m_i}) mod\ M$</p>
-<p>其中，$\frac{M}{m_i} \times[(\frac{M}{m_i})^{-1}]\equiv 1\ mod(m_i)$</p>
-<blockquote>
-<p>显然，$(\frac{M}{m_i},m_i)=1$</p>
-</blockquote>
-<p>在模$M$的情况下，得出的即为唯一的$x$。</p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/03/03/%E4%B8%AD%E5%9B%BD%E5%89%A9%E4%BD%99%E5%AE%9A%E7%90%86/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
